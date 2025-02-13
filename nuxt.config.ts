@@ -6,6 +6,10 @@ export default defineNuxtConfig({
 
   experimental: {},
 
+  image: {
+    domains: ['https://dummyjson.com'],
+  },
+
   unhead: {},
 
   devtools: { enabled: true },
@@ -23,6 +27,7 @@ export default defineNuxtConfig({
       '@nuxtjs/google-fonts',
       {
         families: {
+          Montserrat: true,
           Roboto: true,
           Inter: [400, 700],
           'Josefin+Sans': true,

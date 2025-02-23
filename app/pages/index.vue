@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { type RecipeResponses } from '../../types/type'
+import RecipesList from './RecipesList.vue'
 // definePageMeta({
 //   layout: 'login',
 // })
@@ -7,6 +8,19 @@ import { type RecipeResponses } from '../../types/type'
 const { data, error } = await useFetch<RecipeResponses>(
   'https://dummyjson.com/recipes/search?q=Margherita'
 )
+
+useSeoMeta({
+  title: 'Nuxtcipes',
+  description: 'Recipes for you to cook!',
+  ogTitle: 'Nuxtcipes',
+  ogDescription: 'Recipes for you to cook!',
+  ogImage: '/nuxt-course-hero.png',
+  ogUrl: '[og:url]',
+  twitterTitle: 'Nuxtcipes',
+  twitterDescription: 'Recipes for you to cook!',
+  twitterImage: '/nuxt-course-hero.png',
+  twitterCard: 'summary',
+})
 </script>
 
 <template>
@@ -35,63 +49,18 @@ const { data, error } = await useFetch<RecipeResponses>(
         </div>
       </div>
     </section>
-    <section id="recipes" class="py-20 container">
+    <section class="py-20 container">
       <h2 class="text-3xl lg:text-5xl mb-2">Discover, Create, Share</h2>
       <p class="text-lg lg:text-xl mb-8">Check out our most popular recipes!</p>
       <div
-        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8"
-      >
-        <div
-          v-for="recipe in data?.recipes"
-          :key="recipe.id"
-          class="flex flex-col shadow rounded-md"
-        >
-          <NuxtImg
-            :src="recipe.image"
-            sizes="xs:100vw sm:50vw lg:400px"
-            format="webp"
-            densities="x1"
-            alt="{{ recipe.name }}"
-            class="rouded-t-md"
-          />
-          <div class="flex flex-col py-6 px-4 flex-1">
-            <p class="text-xl lg:text-2xl font-semibold mb-2">
-              {{ recipe.name }}
-            </p>
-            <div
-              class="font-normal w-full •bg-white/80 flex gap-8 text-lg lg:text-xl mb-4 mt-auto"
-            >
-              <div class="flex items-center gap-1">
-                <Icon name="material-symbols:alarm-on" style="color: #f79f1a" />
-                <span>{{ recipe.cookTimeMinutes }}</span>
-              </div>
-              <div class="flex items-center gap-1">
-                <Icon
-                  name="material-symbols:local-fire-department-rounded"
-                  style="color: #f79f1a"
-                />
-                <span>{{ recipe.caloriesPerServing }}</span>
-              </div>
-              <div class="flex items-center gap-1">
-                <Icon
-                  name="material-symbols:family-star-sharp"
-                  style="color: #f79f1a"
-                />
-                <span>{{ recipe.rating }} </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- <div
         v-if="!error"
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8"
       >
-        <RecipeCard v-for="recipe in data?.recipes" :recipe="recipe" />
+        <RecipesList :data="data" />
       </div>
       <p v-else class="text-xl">
-        Opps, something went wrong. Please try again later
-      </p> -->
+        Quelque chose ne va pas... Essayez plus tard !
+      </p>
     </section>
     <section class="bg-[#f1f1f1] py-20">
       <SignupForm />

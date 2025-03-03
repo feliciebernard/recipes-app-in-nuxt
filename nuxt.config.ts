@@ -40,4 +40,9 @@ export default defineNuxtConfig({
       },
     ],
   ],
+
+  runtimeConfig: {
+    notionApiKey: process.env.NOTION_KEY,
+    notionDatabaseId: process.env.NOTION_PAGE_ID,
+  },
 })

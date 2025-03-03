@@ -24,3 +24,10 @@ export interface Recipe {
   reviewCount: number
   mealType: string[]
 }
+
+export interface rowsStructured {
+  title?: string
+  cook_time?: string
+  person_number?: number
+  created_at?: Date
+}

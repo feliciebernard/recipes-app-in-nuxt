@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { type RecipeResponses } from '../../types/type'
 import RecipesList from './RecipesList.vue'
-// definePageMeta({
-//   layout: 'login',
-// })
 
-const { data, error } = await useFetch<RecipeResponses>(
-  'https://dummyjson.com/recipes/search?q=Margherita'
-)
+const fetchFromNotion = async () => {
+  const res = await fetch('http://localhost:3000/api/notion')
+  const data = await res.json()
+
+  return data
+}
+
+const rows = await fetchFromNotion()
 
 useSeoMeta({
   title: 'Nuxtcipes',
@@ -52,15 +53,22 @@ useSeoMeta({
     <section class="py-20 container">
       <h2 class="text-3xl lg:text-5xl mb-2">Discover, Create, Share</h2>
       <p class="text-lg lg:text-xl mb-8">Check out our most popular recipes!</p>
-      <div
+      <!-- <div
         v-if="!error"
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8"
-      >
-        <RecipesList :data="data" />
-      </div>
-      <p v-else class="text-xl">
+      > -->
+      <RecipesList :data="rows" />
+      <ul>
+        <li v-for="item in rows" :key="item.plain_text">
+          <strong>{{ item.person_number }}</strong> -
+          {{ item.title }}
+          <div>{{ item.created_at }}</div>
+        </li>
+      </ul>
+      <!-- </div> -->
+      <!-- <p v-else class="text-xl">
         Quelque chose ne va pas... Essayez plus tard !
-      </p>
+      </p> -->
     </section>
     <section class="bg-[#f1f1f1] py-20">
       <SignupForm />
